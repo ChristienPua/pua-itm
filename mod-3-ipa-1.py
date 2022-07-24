@@ -153,18 +153,34 @@ def vigenere_cipher(message, key):
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
 def vigenere_cipher(message, key):
+
+    if len(message) == len(key):
+        pass
+    else:
+        new_key_mod = len(message) % len(key)
+        new_key_number = len(message) // len(key)
+        newkey = ""
+        if new_key_mod == 0:
+            for i in range (0,int(new_key_number)):
+                new_key += key
+        else:
+            for i in range (0, int(new_key_number)):
+                new_key += key
+            for n in range(0, int(new_key_mod)):
+                new_key += key[n]
+        key = new_key
     
-    encrypted = []
+    translated = ""
+    for i in range (0, len(key)):
+        if message[i] == " ":
+            translated += " "
+        else:
+            if ord(message[i]) + ord(key[i]) <= 155:
+                translated += chr (ord(message[i]) + ord(key[i]) - 65)
+            else:
+                translated += chr (ord(message[i]) + ord(key[i]) - 91)
     
-    key_length = len(key)
-    key_int = [ord(i) for i in key]
-    message_int = [ord(i) for i in message]
-    for i in range(len(message_int)):
-        value = (message_int[i] + key_int[i % key_length]) % 26
-        if value == (32 + key_int[i % key_length]) % 26:
-            value = -33
-        encrypted.append(chr(value + 65))
-    return ''.join(encrypted)
+    return translated
 
 def scytale_cipher(message, shift):
     '''Scytale Cipher.
