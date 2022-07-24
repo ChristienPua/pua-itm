@@ -71,12 +71,14 @@ def caesar_cipher(message, shift):
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
 def caesar_cipher(message, shift):
-    import string
-    alphabet = string.ascii_uppercase
-    shifted = alphabet[shift:] + alphabet[:shift]
-    table = str.maketrans(alphabet, shifted)
-    
-    return message.translate(table)
+    translated = ""
+    for n in message:
+        if n.isalpha():
+            final_letter = (chr(((ord(n)-65+shift)%26)+65))
+            translated += final_letter
+        else:
+            translated += n
+    return translated
 
 def shift_by_letter(letter, letter_shift):
     '''Shift By Letter. 
