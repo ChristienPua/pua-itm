@@ -1,3 +1,4 @@
+# Hi sir, it appears I can not upload my token on the internet otherwise discord will automatically renew it. So for now, this code is not connected to my bot
 import discord, datetime, asyncio, apscheduler, youtube_dl, os
 from discord.ext import tasks, commands
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
