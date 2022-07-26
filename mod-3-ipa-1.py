@@ -159,7 +159,7 @@ def vigenere_cipher(message, key):
     else:
         new_key_mod = len(message) % len(key)
         new_key_number = len(message) // len(key)
-        newkey = ""
+        new_key = ""
         if new_key_mod == 0:
             for i in range (0,int(new_key_number)):
                 new_key += key
