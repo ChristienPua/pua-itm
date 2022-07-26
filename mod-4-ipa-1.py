@@ -188,32 +188,27 @@ def eta(first_stop, second_stop, route_map):
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
 def eta(first_stop, to_stop, route_map):
-    
-    first_route = [x for x in route_map.keys() if x[0] == first_stop]
-    sample_time = route_map[first_route[0]]
-    time_1 = sample_time['travel_time_mins']
-    time = time_1
-    
-    if to_stop not in first_route[0]:
-        next_route = [x for x in route_map.keys() if x[0] != first_stop and x[1] != first_stop and x[0] != to_stop and x[1] != to_stop]
-        final_route = [x for x in route_map.keys() if x[1] == to_stop]
-        time_2 = 0
-        
-        if len(next_route) > 0:
-            for i in range(len(next_route)):     
-                next_time = route_map[next_route[i]]
-                time_2 = time_2 + next_time['travel_time_mins']
-                                      
-                next_time_2 = route_map[final_route[0]]
-                time_3 = next_time_2['travel_time_mins']
-                time = time_1 + time_2 + time_3
-        
-        else:
-            next_time_2 = route_map[final_route[0]]
-            time_3 = next_time_2['travel_time_mins']
-            time = time_1 + time_3
-    
-    if first_route[0][1] == final_route[0][0]:
-        time = time_1 + time_3
-    
+    travel_times = [route_map[list(route_map.keys())[0]]["travel_time_mins"]]
+    travel_route = [list(route_map.keys())[0][0]]
+    next_stop = list(route_map.keys())[0][1]
+    sample_map = route_map.copy()
+    sample_map.pop(list(route_map.keys())[0])
+    while len(sample_map) != 0:
+        for n in sample_map.copy():
+            if n[0] == next_stop:
+                travel_times.append(sample_map[n]["travel_time_mins"])
+                travel_route.append(n[0])
+                next_stop = n[1]
+                sample_map.pop(n)
+    first_stop = travel_route.index(first_stop)
+    to_stop = travel_route.index(to_stop)
+    time = 0
+    if to_stop < first_stop:
+        for travel_time in travel_times[first_stop:]:
+            time = time + travel_time
+        for travel_time in travel_times[0:to_stop]:
+            time = time + travel_time
+    else:
+        for travel_time in travel_times[first_stop:to_stop]:
+            time = time + travel_time
     return time
